@@ -1,0 +1,80 @@
+<br>
+
+<h2 class="text-center my-4">Formulaire générique</h2>
+
+<hr />
+
+<div class="container">
+
+    <form [formGroup]="form" class="container">
+
+        <div class="row">
+            <ng-container *ngFor="let field of formData.fields; let i = index">
+
+                <div class="col-md-{{ 12 / formData.columnsPerRow }}">
+                    <div class="form-group">
+
+                        <label [hidden]="field.hidelabel">{{ field.description }}</label>
+                        <input [value]="field.defaultValue" *ngIf="field.type === 'text'" type="text" [placeholder]="field.placeholder"
+                            formControlName="{{ field.label }}" class="form-control">
+                        <input [value]="field.defaultValue" *ngIf="field.type === 'number'" [disabled]="field.disabled"
+                            [hidden]="field.hidden" type="number" formControlName="{{ field.label }}"
+                            class="form-control">
+
+                        <input [value]="field.defaultValue" *ngIf="field.type === 'checkbox'" type="checkbox"
+                            formControlName="{{ field.label }}" class="form-check-input">
+
+                        <div *ngIf="field.type === 'radio'" class="form-check">
+                            <div *ngFor="let option of field.options">
+                                <input [value]="option" type="radio" formControlName="{{ field.label }}"
+                                    [checked]="option == field.defaultValue" class="form-check-input">
+                                <label class="form-check-label">{{ option }}</label>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="field.type === 'select'">
+                            <ng-select class="form-control custom" [formControlName]="field.label" [searchable]="true"
+                                [(ngModel)]="field.selectedValue" [clearable]="true" [multiple]="false"
+                                [closeOnSelect]="true" appendTo="body" minimum="1" maximum="2">
+                                <ng-option *ngFor="let val of field.options" [value]="val[field.key]">
+                                    {{ val[field.value] }}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+
+
+                        <textarea [value]="field.defaultValue" *ngIf="field.type === 'textarea'"
+                            [rows]="field.rows || 3" formControlName="{{ field.label }}"
+                            class="form-control"></textarea>
+
+                        <input [value]="field.defaultValue" *ngIf="field.type === 'date'" type="date"
+                            formControlName="{{ field.label }}" class="form-control">
+                        <input [value]="field.defaultValue" *ngIf="field.type === 'calendar'" type="text"
+                            formControlName="{{ field.label }}" class="form-control">
+
+                        <br />
+
+                        <div *ngIf="form.get(field.label).invalid && (form.get(field.label).dirty || form.get(field.label).touched)"
+                            class="error-message">
+                            <div *ngIf="form.get(field.label).errors?.['required']" class="text-danger">Ce champ est
+                                requis
+                            </div>
+                            <div *ngIf="form.get(field.label).errors?.['minlength']" class="text-danger">Minimum {{
+                                form.get(field.label).errors?.['minlength'].requiredLength }} caractères requis</div>
+
+
+                            <div *ngIf="form.get(field.label).errors?.['maxLength']" class="text-danger">Maximum
+                                {{ form.get(field.label).errors?.['maxLength'].requiredLength }} caractères requis</div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+    </form>
+    <hr />
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Envoyer</button>
+</div>
