@@ -15,8 +15,8 @@
                     <div class="form-group">
 
                         <label [hidden]="field.hidelabel">{{ field.description }}</label>
-                        <input [value]="field.defaultValue" *ngIf="field.type === 'text'" type="text" [placeholder]="field.placeholder"
-                            formControlName="{{ field.label }}" class="form-control">
+                        <input [value]="field.defaultValue" *ngIf="field.type === 'text'" type="text"
+                            [placeholder]="field.placeholder" formControlName="{{ field.label }}" class="form-control">
                         <input [value]="field.defaultValue" *ngIf="field.type === 'number'" [disabled]="field.disabled"
                             [hidden]="field.hidden" type="number" formControlName="{{ field.label }}"
                             class="form-control">
