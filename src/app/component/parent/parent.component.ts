@@ -39,17 +39,9 @@ export class ParentComponent implements OnInit {
 
 
   getValidators(label: string): { validators?: any[] } {
-    if (label === 'paysCod') {
+
+    if (label === 'nomEtudiant') {
       return { validators: [Validators.required] };
-    }
-
-
-    if (label === 'paysDesc') {
-      return { validators: [Validators.required] };
-    }
-
-    if (label === 'paysAbr') {
-      return { validators: [Validators.maxLength(3), Validators.pattern('^[a-zA-Z]*$')] };
     }
 
     return {};
